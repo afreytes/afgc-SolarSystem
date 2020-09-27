@@ -5,4 +5,9 @@ Solar system simulation based on <a href="https://github.com/arinal/WpfSolarSyst
 - Get Raylib_cs package from nuget
 - Get Raylib DLL from Raylib releases (follow instructions on Chriss Dill's bindings readme)
 
+## Maybe Later
+- Use Raylib physics
+- Add/delete objects interactively
+- Change mass/accel properties on selected object
+
 Note: This is a just-for-fun project, not meant to be an accurate simulation.
