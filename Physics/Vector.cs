@@ -9,12 +9,14 @@ namespace Physics
 
         public double X
         {
-            get { return _x; }        
+            get { return _x; }
+            set => _x = value;  
         }
         
         public double Y
         {
             get { return _y; }
+            set => _y = value;
         }
 
         public double Magnitude

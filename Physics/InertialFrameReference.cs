@@ -1,10 +1,9 @@
 using System.Collections.Generic;
-
 namespace Physics
 {
     public class InertialFrameReference
     {
-        private const double GravityConst = 3;
+        private const double GravityConst = 2.9;
         private readonly List<BallMass> _ballMasses;
 
         public IEnumerable<BallMass> BallMasses
