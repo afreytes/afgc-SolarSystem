@@ -25,9 +25,9 @@ namespace RLSolarSystem
             foreach (var b in _balls)
             {
                 b.Update();
-                Raylib.DrawCircle(b.Ellipse.X, b.Ellipse.Y, (int)b.Ellipse.Width, b.Ellipse.Fill);
-                Raylib.DrawCircleLines(b.Ellipse.X, b.Ellipse.Y, (int)b.Ellipse.Width, Color.WHITE);
-                if (b.IsShowName) { Raylib.DrawText(b.Name,b.Ellipse.X+(int)b.Ellipse.Height,b.Ellipse.Y+(int)b.Ellipse.Width,10,Color.WHITE); }
+                Raylib.DrawCircle(b.X, b.Y, (int)b.Width, b.Fill);
+                Raylib.DrawCircleLines(b.X, b.Y, (int)b.Width, Color.WHITE);
+                if (b.IsShowName) { Raylib.DrawText(b.Name,b.X+(int)b.Height,b.Y+(int)b.Width,10,Color.WHITE); }
                 if (b==SelectedBall)
                 {
                     Raylib.DrawText("Name: " + b.Name, 2, 24, 10, Color.WHITE);
@@ -36,8 +36,8 @@ namespace RLSolarSystem
                     Raylib.DrawText("Velocity: " + b.BallMass.Velocity, 2, 60, 10, Color.WHITE);
                     Raylib.DrawText("Acceleration: " + b.BallMass.Acceleration, 2, 72, 10, Color.WHITE);
                 }
-                if (Raylib.IsMouseButtonPressed(MouseButton.MOUSE_RIGHT_BUTTON) && Raylib.CheckCollisionPointCircle(Raylib.GetMousePosition(), new System.Numerics.Vector2(b.Ellipse.X, b.Ellipse.Y), (float)b.Ellipse.Width)) { b.OnClick(); };
-                if (Raylib.IsMouseButtonPressed(MouseButton.MOUSE_LEFT_BUTTON) && Raylib.CheckCollisionPointCircle(Raylib.GetMousePosition(), new System.Numerics.Vector2(b.Ellipse.X, b.Ellipse.Y), (float)b.Ellipse.Width)) { SelectedBall = SelectedBall == b ? null : b; };
+                if (Raylib.IsMouseButtonPressed(MouseButton.MOUSE_RIGHT_BUTTON) && Raylib.CheckCollisionPointCircle(Raylib.GetMousePosition(), new System.Numerics.Vector2(b.X, b.Y), (float)b.Width)) { b.OnClick(); };
+                if (Raylib.IsMouseButtonPressed(MouseButton.MOUSE_LEFT_BUTTON) && Raylib.CheckCollisionPointCircle(Raylib.GetMousePosition(), new System.Numerics.Vector2(b.X, b.Y), (float)b.Width)) { SelectedBall = SelectedBall == b ? null : b; };
 
                 Raylib.DrawText(IsPaused?"Paused":"", 2, 2, 10, Color.WHITE);
                 Raylib.DrawText("Spacebar: Pause | Left Click: De/Select | Right Click: Show/Hide Name ", 2, _canvas.Height - 12, 10, Color.WHITE);
@@ -57,7 +57,6 @@ namespace RLSolarSystem
                                     }, color,name);
             _balls.Add(ball);
             _engine.AddBallMass(ball.BallMass);
-            _canvas.Objects.Add(ball.Ellipse);
         }
     }
 
