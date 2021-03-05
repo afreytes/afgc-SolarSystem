@@ -1,25 +1,22 @@
-﻿using Raylib_cs;
-namespace RLSolarSystem
+﻿using afgc;
+using Raylib_cs;
+namespace afgcSolarSystem
 {
-    class Program
+    internal class Program
     {
-        static readonly int MainWindowHeight = 601;
-        static readonly int MainWindowWidth = 1278;
-        static readonly int MainWindowMargin = 5;
-        static readonly int MainTextSize = 20;
+        private static readonly int MainWindowHeight = Defaults.WindowHeight;
+        private static readonly int MainWindowWidth = Defaults.WindowWidth;
 
-        static void Main()
+        private static void Main()
         {
             Canvas _canvas = new Canvas()
             {
-                Height = MainWindowHeight,
-                Width = MainWindowWidth,
-                Margin = MainWindowMargin,
-                TextSize = MainTextSize
+                WindowWidth = MainWindowWidth,
+                WindowHeight = MainWindowHeight
             };
 
-            int Middle = _canvas.Height / 2;
-            int Center = _canvas.Width / 2;
+            int Middle = _canvas.WindowHeight / 2;
+            int Center = _canvas.WindowWidth / 2;
 
             _canvas.AddBall(mass: 99, radius: 25, x: Center, y: Middle, vx: -0.0, vy: 0.0, Color.YELLOW, "Sun");
 
@@ -34,10 +31,8 @@ namespace RLSolarSystem
             //Pluto is no longer a planet!
             //_canvasManager.AddBall(mass: 0.01, radius: 01, x: Center + 100 + 900, y: Middle, vx: -0.07, vy:+0.07, Color.PURPLE);
 
-            Raylib.InitWindow(_canvas.Width, _canvas.Height, "RLSolarSystem");
-
-            //Uncomment next line to get a less chaotic animation
-            //Raylib.SetTargetFPS(60);
+            Raylib.InitWindow(_canvas.WindowWidth, _canvas.WindowHeight, "RLSolarSystem");
+            Raylib.SetTargetFPS(Defaults.FPS); //Comment/uncommet this line to get a less chaotic animation
 
             while (!Raylib.WindowShouldClose())
             {
