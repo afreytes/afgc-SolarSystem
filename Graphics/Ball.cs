@@ -1,14 +1,18 @@
 using afgc;
 using Physics;
 using Raylib_cs;
-using System;
+using static Raylib_cs.Raylib;
+using System.Numerics;
 
 namespace afgcSolarSystem
 {
     public class Ball
     {
-        public int X { get; set; }
-        public int Y { get; set; }
+        //public int X { get; set; }
+        //public int Y { get; set; }
+        //replaces X and Y
+        public Vector2[] Position = new Vector2[1001];
+        public int CurrentIndex = 1000;
         public Color Fill { get; set; }
         public double Height { get; set; }
         public double Width { get; set; }
@@ -41,22 +45,28 @@ namespace afgcSolarSystem
         }
         public void Update()
         {
-            X = (int)(_ballMass.Position.X - _ballMass.Radius);
-            Y = (int)(_ballMass.Position.Y - _ballMass.Radius);
+            //X = (int)(_ballMass.Position.X - _ballMass.Radius);
+            //Y = (int)(_ballMass.Position.Y - _ballMass.Radius);
+            for (int c = 0; c < Position.Length - 1; c++)
+            {
+                Position[c] = Position[c + 1];
+            }
+            Position[1000] = new Vector2((float)(_ballMass.Position.X - _ballMass.Radius), (float)(_ballMass.Position.Y - _ballMass.Radius));
         }
 
         internal void Render()
         {
             Update();
 
-            if (Raylib.IsMouseButtonPressed(MouseButton.MOUSE_LEFT_BUTTON)
-                && Raylib.CheckCollisionPointCircle(Raylib.GetMousePosition()
-                , new System.Numerics.Vector2(X, Y), (float)Width))
+            if (IsMouseButtonPressed(MouseButton.MOUSE_LEFT_BUTTON)
+                && CheckCollisionPointCircle(GetMousePosition()
+                , Position[CurrentIndex], (float)Width))
             { IsSelected = !IsSelected; }
 
-            Raylib.DrawCircle(X, Y, (int)Width, Fill);
-            Raylib.DrawCircleLines(X, Y, (int)Width, Defaults.IsNowOdd() ? Color.RAYWHITE : Color.YELLOW);
-            if (IsShowName) { Raylib.DrawText(Name, X + (int)Height, Y + (int)Width, Defaults.FontSize / 2, Defaults.colC64BackColor); }
+            for (int c = 0; c < Position.Length; c++) { DrawPixelV(Position[c], Defaults.colAlphaGrey); }
+            DrawCircleV(Position[CurrentIndex], (int)Width + 1, Defaults.IsNowOdd() ? Color.RAYWHITE : Color.YELLOW);
+            DrawCircleV(Position[CurrentIndex], (int)Width, Fill);
+            if (IsShowName) { DrawTextEx(GetFontDefault(), Name, Position[CurrentIndex] + new Vector2(-5, (float)Width + 2f), Defaults.FontSize / 2, 1f, Defaults.colC64BackColor); }
 
         }
     }
